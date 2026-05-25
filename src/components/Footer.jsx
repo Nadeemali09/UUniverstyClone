@@ -1,12 +1,13 @@
+
+import logo from '../assets/UttrachalUniversityLogo.png'; 
+
 const Footer = () => (
   <footer className="bg-[#0f172a] text-white/70 py-8 px-5">
     <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
       {/* Column 1: University Info */}
       <div>
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white font-bold">
-            UU
-          </div>
+          <img src={logo} alt="Uttaranchal University Logo" className="w-10 h-10 rounded-full" />
           <div>
             <strong className="block text-white text-[15px]">Uttaranchal University</strong>
             <span className="text-[11px] text-white/50">UIT, Dehradun</span>
