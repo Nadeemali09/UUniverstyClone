@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import bgImage from '../assets/bgimage.png';
 
 const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
@@ -6,7 +7,9 @@ const Hero = ({ openPopup }) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    email: '',
     course: '',
+    qualification: '',
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -29,9 +32,9 @@ const Hero = ({ openPopup }) => {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          email: '',               // Agar email field ho to yahan add karein
+          email: formData.email,
           course: formData.course,
-          qualification: '',
+          qualification: formData.qualification,
         }),
       });
       setSubmitted(true);
@@ -42,16 +45,14 @@ const Hero = ({ openPopup }) => {
   };
 
   return (
-    <section className="relative min-h-150 flex items-center overflow-hidden">
+    <section className="relative min-h-[600px] flex items-center overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1523050854058-8df9010a7eec?auto=format&fit=crop&w=1200&q=80')",
-        }}
+        style={{ backgroundImage: `url(${bgImage})` }}
       />
-      <div className="absolute inset-0 bg-linear-to-br from-secondary/90 via-[#2d3f8f]/80 to-primary/85" />
+      {/* Slight dark overlay to ensure text readability, but reduced opacity */}
+      <div className="absolute inset-0 bg-gradient-to-br from-secondary/70 via-[#2d3f8f]/60 to-primary/65" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 py-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
         {/* Left: Text */}
@@ -62,15 +63,15 @@ const Hero = ({ openPopup }) => {
           <h1 className="font-playfair font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-4">
             Shape Your Future at<br />Uttaranchal University
           </h1>
-          <p className="text-base text-white/80 max-w-xl leading-relaxed mb-7">
+          <p className="text-base text-white/90 max-w-xl leading-relaxed mb-7">
             NAAC A+ Accredited | 29,000+ Students | Ranked #75 Nationally in Pharmacy by NIRF 2025.
             Experience world-class education in the scenic Doon Valley, Dehradun.
           </p>
         </div>
 
-        {/* Right: Form Card */}
+        {/* Right: Transparent Froste Glass Form */}
         <div
-          className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 lg:p-8"
+          className="w-full max-w-md bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl p-6 lg:p-8 border border-white/30"
           onClick={(e) => e.stopPropagation()}
         >
           {!submitted ? (
@@ -79,45 +80,81 @@ const Hero = ({ openPopup }) => {
               <p className="text-sm text-gray mb-5">Fill the form, we’ll call you within 24 hours.</p>
 
               <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-dark mb-1">Full Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your full name"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:border-primary outline-none"
-                  />
+                {/* Row 1: Name + Phone */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-dark mb-1">Full Name *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your full name"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-dark mb-1">Mobile No. *</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+91 XXXXX XXXXX"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-dark mb-1">Mobile Number *</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+91 XXXXX XXXXX"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:border-primary outline-none"
-                  />
+
+                {/* Row 2: Email + Course */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-dark mb-1">Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="email@example.com"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-dark mb-1">Course Interested</label>
+                    <select
+                      name="course"
+                      value={formData.course}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
+                    >
+                      <option value="">Select Course</option>
+                      <option>B.Tech</option>
+                      <option>MBA</option>
+                      <option>B.Pharma</option>
+                      <option>BA LLB</option>
+                      <option>B.Sc Nursing</option>
+                      <option>BCA / MCA</option>
+                    </select>
+                  </div>
                 </div>
+
+                {/* Row 3: Qualification */}
                 <div>
-                  <label className="block text-xs font-semibold text-dark mb-1">Course Interested In</label>
+                  <label className="block text-xs font-semibold text-dark mb-1">Current Qualification</label>
                   <select
-                    name="course"
-                    value={formData.course}
+                    name="qualification"
+                    value={formData.qualification}
                     onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:border-primary outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
                   >
-                    <option value="">Select Course</option>
-                    <option>B.Tech</option>
-                    <option>MBA</option>
-                    <option>B.Pharma</option>
-                    <option>BA LLB</option>
-                    <option>B.Sc Nursing</option>
-                    <option>BCA / MCA</option>
+                    <option value="">Select</option>
+                    <option>Currently in 12th</option>
+                    <option>Passed 12th</option>
+                    <option>Graduation</option>
+                    <option>Post Graduation</option>
                   </select>
                 </div>
+
                 <button
                   onClick={handleSubmit}
                   className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-lg font-bold text-sm transition-colors"
