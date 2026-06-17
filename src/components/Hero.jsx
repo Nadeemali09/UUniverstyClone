@@ -1,184 +1,88 @@
-import { useState } from 'react';
 import bgImage from '../assets/bgimage.png';
+import LeadForm from './LeadForm';
 
-const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+const quickSearches = ['BTech', 'MBA', 'BBA', 'BA LLB', 'BSc Nursing', 'BCA'];
 
-const Hero = ({ openPopup }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    course: '',
-    qualification: '',
-  });
-  const [submitted, setSubmitted] = useState(false);
+const Hero = ({ openPopup }) => (
+  <section className="relative overflow-hidden bg-secondary" id="home">
+    <div
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+      style={{ backgroundImage: `url(${bgImage})` }}
+    />
+    <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(12,25,56,0.98),rgba(20,48,86,0.9),rgba(200,16,46,0.72))]" />
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.stopPropagation();
-    if (!formData.name.trim() || !formData.phone.trim()) {
-      alert('Please enter your name and mobile number.');
-      return;
-    }
-
-    try {
-      await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          course: formData.course,
-          qualification: formData.qualification,
-        }),
-      });
-      setSubmitted(true);
-    } catch (error) {
-      alert('Something went wrong. Please try again.');
-      console.error(error);
-    }
-  };
-
-  return (
-    <section className="relative min-h-[600px] flex items-center overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      />
-      {/* Slight dark overlay to ensure text readability, but reduced opacity */}
-      <div className="absolute inset-0 bg-gradient-to-br from-secondary/70 via-[#2d3f8f]/60 to-primary/65" />
-
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-5 py-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-        {/* Left: Text */}
-        <div className="flex-1 text-white">
-          <span className="inline-block bg-accent text-dark text-xs font-bold uppercase px-4 py-1.5 rounded-full mb-4 tracking-wider">
-            🎓 Admissions 2026 Open — Limited Seats!
-          </span>
-          <h1 className="font-playfair font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-4">
-            Shape Your Future at<br />Uttaranchal University
-          </h1>
-          <p className="text-base text-white/90 max-w-xl leading-relaxed mb-7">
-            NAAC A+ Accredited | 29,000+ Students | Ranked #75 Nationally in Pharmacy by NIRF 2025.
-            Experience world-class education in the scenic Doon Valley, Dehradun.
-          </p>
+    <div className="relative mx-auto grid min-h-[calc(100vh-64px)] max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-8 lg:py-16">
+      <div className="text-white">
+        <div className="mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-white/90 backdrop-blur">
+          Admission guidance 2026
         </div>
 
-        {/* Right: Transparent Froste Glass Form */}
-        <div
-          className="w-full max-w-md bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl p-6 lg:p-8 border border-white/30"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {!submitted ? (
-            <>
-              <h3 className="text-xl font-bold text-secondary mb-1">Get Free Counselling</h3>
-              <p className="text-sm text-gray mb-5">Fill the form, we’ll call you within 24 hours.</p>
+        <h1 className="max-w-3xl font-playfair text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
+          Great futures start with the right college choice
+        </h1>
+        <p className="mt-5 max-w-2xl text-base leading-8 text-white/82 sm:text-lg">
+          Compare colleges, courses, fees, eligibility, and career pathways with counsellor-led guidance for
+          Indian university admissions.
+        </p>
 
-              <div className="space-y-4">
-                {/* Row 1: Name + Phone */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-semibold text-dark mb-1">Full Name *</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Your full name"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-dark mb-1">Mobile No. *</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+91 XXXXX XXXXX"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
-                    />
-                  </div>
-                </div>
+        <div className="mt-8 max-w-2xl rounded-xl border border-white/20 bg-white p-2 shadow-2xl">
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <label className="sr-only" htmlFor="hero-search">Search courses or colleges</label>
+            <input
+              id="hero-search"
+              type="text"
+              placeholder="Search courses, colleges, or specializations"
+              className="min-h-12 flex-1 rounded-lg border border-transparent px-4 text-sm font-medium text-slate-700 outline-none focus:border-primary"
+            />
+            <button
+              type="button"
+              onClick={openPopup}
+              className="min-h-12 rounded-lg bg-primary px-6 text-sm font-extrabold text-white transition hover:bg-primary-dark"
+            >
+              Get Guidance
+            </button>
+          </div>
+        </div>
 
-                {/* Row 2: Email + Course */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-semibold text-dark mb-1">Email Address</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="email@example.com"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-dark mb-1">Course Interested</label>
-                    <select
-                      name="course"
-                      value={formData.course}
-                      onChange={handleChange}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
-                    >
-                      <option value="">Select Course</option>
-                      <option>B.Tech</option>
-                      <option>MBA</option>
-                      <option>B.Pharma</option>
-                      <option>BA LLB</option>
-                      <option>B.Sc Nursing</option>
-                      <option>BCA / MCA</option>
-                    </select>
-                  </div>
-                </div>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {quickSearches.map((item) => (
+            <button
+              type="button"
+              key={item}
+              onClick={openPopup}
+              className="rounded-full border border-white/18 bg-white/10 px-4 py-2 text-xs font-bold text-white transition hover:bg-white hover:text-secondary"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
 
-                {/* Row 3: Qualification */}
-                <div>
-                  <label className="block text-xs font-semibold text-dark mb-1">Current Qualification</label>
-                  <select
-                    name="qualification"
-                    value={formData.qualification}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-dark focus:border-primary outline-none bg-white/90"
-                  >
-                    <option value="">Select</option>
-                    <option>Currently in 12th</option>
-                    <option>Passed 12th</option>
-                    <option>Graduation</option>
-                    <option>Post Graduation</option>
-                  </select>
-                </div>
-
-                <button
-                  onClick={handleSubmit}
-                  className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-lg font-bold text-sm transition-colors"
-                >
-                  Submit & Get Call Back →
-                </button>
-              </div>
-              <p className="text-[11px] text-gray text-center mt-4">
-                🔒 Your data is 100% secure. No spam.
-              </p>
-            </>
-          ) : (
-            <div className="text-center py-6">
-              <div className="text-5xl mb-4">✅</div>
-              <h4 className="text-xl font-bold text-secondary mb-2">Thank You, {formData.name}!</h4>
-              <p className="text-sm text-gray">
-                Our counsellor will call you on <strong>{formData.phone}</strong> within 24 hours.
-              </p>
+        <div className="mt-9 grid max-w-2xl grid-cols-3 gap-3">
+          {[
+            ['1000+', 'college options'],
+            ['40+', 'course streams'],
+            ['Free', 'first counselling'],
+          ].map(([value, label]) => (
+            <div key={label} className="rounded-xl border border-white/16 bg-white/10 p-4 backdrop-blur">
+              <div className="text-2xl font-extrabold text-accent">{value}</div>
+              <div className="mt-1 text-xs font-semibold text-white/75">{label}</div>
             </div>
-          )}
+          ))}
         </div>
       </div>
-    </section>
-  );
-};
+
+      <aside className="rounded-2xl border border-white/25 bg-white p-5 shadow-2xl sm:p-6 lg:p-7" onClick={(event) => event.stopPropagation()}>
+        <div className="mb-5">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Register now</p>
+          <h2 className="mt-2 text-2xl font-extrabold text-secondary">Consult a counsellor</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            Share your preferences and get a practical shortlist with eligibility, fee, and timeline guidance.
+          </p>
+        </div>
+        <LeadForm compact source="Hero Counselling Form" />
+      </aside>
+    </div>
+  </section>
+);
 
 export default Hero;

@@ -1,17 +1,17 @@
 const stats = [
-  { num: '29,000+', label: 'Students Enrolled' },
-  { num: '200+', label: 'Placement Companies' },
-  { num: '₹19.5 LPA', label: 'Highest Package' },
-  { num: '153+', label: 'Courses Offered' },
+  { num: '5+', label: 'University options' },
+  { num: '2026', label: 'Admission guidance' },
+  { num: '8+', label: 'Popular course streams' },
+  { num: 'Free', label: 'Initial counselling' },
 ];
 
 const StatsBar = () => (
-  <div className="bg-white shadow-lg px-5 py-6">
-    <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-5">
-      {stats.map((stat, i) => (
-        <div key={i} className="text-center">
+  <div className="bg-white px-5 py-6 shadow-lg">
+    <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-4">
+      {stats.map((stat) => (
+        <div key={stat.label} className="text-center">
           <div className="text-2xl font-extrabold text-primary">{stat.num}</div>
-          <div className="text-[11px] text-gray font-medium mt-1">{stat.label}</div>
+          <div className="mt-1 text-[11px] font-medium text-gray">{stat.label}</div>
         </div>
       ))}
     </div>

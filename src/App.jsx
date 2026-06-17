@@ -1,95 +1,121 @@
-import { useState, useEffect } from 'react';
-import Header from './components/Header';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useScrollLock } from './hooks';
+import { NAV_LINKS, META } from './constants';
+import { generateSchemaMarkup } from './utils';
+
+// Layouts
+import { HeaderLayout, FooterLayout } from './components/layouts';
+
+// Providers
+import { GoogleAdsProvider } from './components/providers';
+
+// Sections
+import { AccreditationSection } from './components/sections';
+
+// Original Components (to be migrated gradually)
 import Hero from './components/Hero';
 import StatsBar from './components/StatsBar';
-import Accreditation from './components/Accreditation';
+import FeaturedUniversities from './components/FeaturedUniversities';
 import Courses from './components/Courses';
 import WhyChoose from './components/WhyChoose';
-import Placements from './components/Placements';
-import Rankings from './components/Rankings';
+import AdmissionProcess from './components/AdmissionProcess';
 import Testimonials from './components/Testimonials';
+import FAQ from './components/FAQ';
 import InlineForm from './components/InlineForm';
-import Footer from './components/Footer';
+import LegalSections from './components/LegalSections';
 import Popup from './components/Popup';
 import StickyCTA from './components/StickyCTA';
+import CookieConsent from './components/CookieConsent';
+import FeatureCards from './components/FeatureCards';
+import StudyGoalsSection from './components/StudyGoalsSection';
 
+/**
+ * App Component - Main application wrapper
+ * Follows SOLID principles with clear separation of concerns
+ * SEO optimized with proper meta tags and structured data
+ */
 const App = () => {
   const [popupOpen, setPopupOpen] = useState(false);
-  const [scrollPopupShown, setScrollPopupShown] = useState(false);
-  const [timePopupShown, setTimePopupShown] = useState(false);
-
-  // Click anywhere on the page (except interactive elements) opens popup
-  const handlePageClick = (e) => {
-    if (popupOpen) return;
-    // If the click is on a button, link, input, select – ignore
-    if (
-      e.target.closest('button') ||
-      e.target.closest('a') ||
-      e.target.closest('input') ||
-      e.target.closest('select') ||
-      e.target.closest('textarea')
-    ) {
-      return;
-    }
-    setPopupOpen(true);
-  };
-
-  // Scroll trigger – after user scrolls 40% of the page
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollPopupShown || popupOpen) return;
-      const scrollPercentage = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-      if (scrollPercentage > 0.4) {
-        setScrollPopupShown(true);
-        setTimeout(() => setPopupOpen(true), 800);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollPopupShown, popupOpen]);
-
-  // Time trigger – open after 8 seconds if not already shown
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!scrollPopupShown && !popupOpen) {
-        setTimePopupShown(true);
-        setPopupOpen(true);
-      }
-    }, 8000);
-    return () => clearTimeout(timer);
-  }, [scrollPopupShown, popupOpen]);
-
-  // Prevent background scrolling when popup is open
-  useEffect(() => {
-    if (popupOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [popupOpen]);
+  
+  // Lock scroll when modal is open
+  useScrollLock(popupOpen);
 
   const closePopup = () => setPopupOpen(false);
   const openPopup = () => setPopupOpen(true);
 
+  // Generate structured data for SEO
+  const organizationSchema = generateSchemaMarkup('organization', {
+    name: META.siteName,
+    url: META.url,
+    description: META.description,
+    phone: META.phone,
+    email: META.email,
+    sameAs: [
+      `https://twitter.com/${META.social.twitter}`,
+      `https://facebook.com/${META.social.facebook}`,
+      `https://linkedin.com/company/${META.social.linkedin}`,
+    ],
+  });
+
   return (
-    <div onClick={handlePageClick}>
-      <Header openPopup={openPopup} />
-      <Hero openPopup={openPopup} />
-      <StatsBar />
-      <Accreditation />
-      <Courses openPopup={openPopup} />
-      <WhyChoose />
-      <Placements />
-      <Rankings />
-      <Testimonials />
-      <InlineForm />
-      <Footer />
+    <GoogleAdsProvider>
+      <Helmet>
+        {/* Primary Meta Tags */}
+        <meta name="title" content="UniversityConnect | Admission Guidance 2026" />
+        <meta name="description" content={META.description} />
+        <meta name="keywords" content={META.keywords} />
+        <meta name="author" content={META.author} />
+        <meta name="language" content="English" />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href={META.url} />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={META.url} />
+        <meta property="og:title" content="UniversityConnect | Admission Guidance 2026" />
+        <meta property="og:description" content={META.description} />
+        <meta property="og:site_name" content={META.siteName} />
+        <meta property="og:locale" content="en_IN" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="UniversityConnect | Admission Guidance 2026" />
+        <meta name="twitter:description" content={META.description} />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(organizationSchema)}
+        </script>
+      </Helmet>
+
+      <HeaderLayout openPopup={openPopup} navLinks={NAV_LINKS} />
+
+      <main>
+        <Hero openPopup={openPopup} />
+        <StatsBar />
+        <FeatureCards openPopup={openPopup} />
+        <StudyGoalsSection openPopup={openPopup} />
+        <FeaturedUniversities openPopup={openPopup} />
+        <Courses openPopup={openPopup} />
+        <AccreditationSection />
+        <WhyChoose />
+        <AdmissionProcess />
+        <Testimonials />
+        <FAQ />
+        <InlineForm />
+        <LegalSections />
+      </main>
+
+      <FooterLayout />
       <StickyCTA openPopup={openPopup} />
+      <CookieConsent />
+
+      {/* Modal Portal */}
       {popupOpen && <Popup closePopup={closePopup} />}
-    </div>
+    </GoogleAdsProvider>
   );
 };
 

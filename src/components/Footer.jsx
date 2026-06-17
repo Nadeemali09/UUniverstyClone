@@ -1,58 +1,68 @@
-
-import logo from '../assets/UttrachalUniversityLogo.png'; 
-
 const Footer = () => (
-  <footer className="bg-[#0f172a] text-white/70 py-8 px-5">
-    <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-      {/* Column 1: University Info */}
+  <footer className="bg-[#0f172a] px-5 py-8 text-white/70" id="contact">
+    <div className="mx-auto mb-8 grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
       <div>
-        <div className="flex items-center gap-3 mb-3">
-          <img src={logo} alt="Uttaranchal University Logo" className="w-10 h-10 rounded-full" />
+        <div className="mb-3 flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-sm font-extrabold text-secondary">
+            UC
+          </div>
           <div>
-            <strong className="block text-white text-[15px]">Uttaranchal University</strong>
-            <span className="text-[11px] text-white/50">UIT, Dehradun</span>
+            <strong className="block text-[15px] text-white">UniversityConnect</strong>
+            <span className="text-[11px] text-white/50">Admission guidance platform</span>
           </div>
         </div>
         <p className="text-[13px] leading-relaxed">
-          NAAC A+ Accredited private university established in 2013. Serving 29,000+ students with 153+ programs.
+          Independent admission guidance and career counselling for students comparing universities and courses
+          across India.
         </p>
       </div>
 
-      {/* Column 2: Quick Links */}
       <div>
-        <h4 className="text-white text-sm font-bold mb-3">Quick Links</h4>
+        <h4 className="mb-3 text-sm font-bold text-white">Quick Links</h4>
         <ul className="space-y-2">
-          {['About University', 'Courses & Programs', 'Admissions 2026', 'Scholarships', 'Campus Life'].map((item, i) => (
-            <li key={i}><a href="#" className="text-white/60 text-[13px] hover:text-white">{item}</a></li>
+          {[
+            ['About Us', '#about'],
+            ['Universities', '#universities'],
+            ['Courses', '#courses'],
+            ['Admission Process', '#process'],
+            ['FAQ', '#faq'],
+          ].map(([item, href]) => (
+            <li key={item}>
+              <a href={href} className="text-[13px] text-white/60 hover:text-white">{item}</a>
+            </li>
           ))}
         </ul>
       </div>
 
-      {/* Column 3: Programs */}
       <div>
-        <h4 className="text-white text-sm font-bold mb-3">Programs</h4>
+        <h4 className="mb-3 text-sm font-bold text-white">Compliance</h4>
         <ul className="space-y-2">
-          {['B.Tech Engineering', 'MBA Management', 'B.Pharma / M.Pharma', 'BA LLB / Law', 'B.Sc Nursing'].map((item, i) => (
-            <li key={i}><a href="#" className="text-white/60 text-[13px] hover:text-white">{item}</a></li>
+          {[
+            ['Privacy Policy', '#privacy'],
+            ['Terms', '#terms'],
+            ['Disclaimer', '#disclaimer'],
+            ['Lead Form', '#lead-form'],
+          ].map(([item, href]) => (
+            <li key={item}>
+              <a href={href} className="text-[13px] text-white/60 hover:text-white">{item}</a>
+            </li>
           ))}
         </ul>
       </div>
 
-      {/* Column 4: Contact Us (added back) */}
       <div>
-        <h4 className="text-white text-sm font-bold mb-3">Contact Us</h4>
-        <ul className="space-y-2">
-          <li><a href="#" className="text-white/60 text-[13px] hover:text-white">📍 Arcadia Grant, Premnagar, Dehradun</a></li>
-          <li><a href="#" className="text-white/60 text-[13px] hover:text-white"></a></li>
-          <li><a href="#" className="text-white/60 text-[13px] hover:text-white"></a></li>
-          <li><a href="#" className="text-white/60 text-[13px] hover:text-white"></a></li>
+        <h4 className="mb-3 text-sm font-bold text-white">Contact Us</h4>
+        <ul className="space-y-2 text-[13px] text-white/60">
+          <li>Business email: hello@universityconnect.in</li>
+          <li>Address: Update with your registered office address</li>
+          <li>Phone: Add your verified business number</li>
+          <li>Hours: Monday to Saturday, 10 AM to 6 PM</li>
         </ul>
       </div>
     </div>
 
-    {/* Centered copyright text */}
-    <div className="border-t border-white/10 pt-5 text-center text-xs text-white/60">
-      © 2026 Uttaranchal University, Dehradun. All rights reserved. | NAAC A+ | UGC Approved
+    <div className="mx-auto max-w-6xl border-t border-white/10 pt-5 text-center text-xs text-white/60">
+      Copyright 2026 UniversityConnect. Independent counselling platform. Not an official university website.
     </div>
   </footer>
 );

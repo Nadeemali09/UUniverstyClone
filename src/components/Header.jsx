@@ -1,67 +1,71 @@
-// Import the logo image from assets folder
-import logo from '../assets/UttrachalUniversityLogo.png'; // extension .png/.svg/.jpg accordingly
+import logo from "../assets/abc.png";
 
-const Header = ({ openPopup }) => (
-  <header className="sticky top-0 z-50 bg-white shadow-md h-16 px-5 flex items-center justify-between">
-    {/* Left: Logo + University Name */}
-    <div className="flex items-center gap-3">
-      <img
-        src={logo}
-        alt="Uttaranchal University Logo"
-        className="w-12 h-12 object-contain rounded-full" // adjust sizing & shape as needed
-      />
-      <div className="leading-tight">
-        <strong className="block text-[15px] text-secondary font-bold">
-          Uttaranchal University
-        </strong>
-        <span className="text-[11px] text-gray">UIT Dehradun</span>
-      </div>
-    </div>
+const Header = ({ openPopup }) => {
+  return (
+    <header className="sticky top-0 z-50 flex h-16 items-center justify-between bg-white px-5 shadow-md">
+      {/* Logo Section */}
+      <a
+        href="#home"
+        className="flex items-center gap-3"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={logo}
+          alt="UniversityConnect Logo"
+          className="h-12 w-12 object-contain"
+          onError={(e) => {
+            console.error("Logo failed to load");
 
-    {/* Center: Navigation (hidden on mobile) */}
-    <nav className="hidden md:flex items-center gap-5">
-      <a href="#" className="text-sm font-medium text-dark">Courses</a>
-      <a href="#" className="text-sm font-medium text-dark">Admissions</a>
-      <a href="#" className="text-sm font-medium text-dark">Placements</a>
-      <a href="#" className="text-sm font-medium text-dark">Campus</a>
-    </nav>
+            e.target.src =
+              "https://placehold.co/48x48/1e40af/ffffff?text=UC";
+          }}
+        />
 
-    {/* Right: Search Button + Apply Now Button */}
-    <div className="flex items-center gap-3">
-      {/* Search Button */}
+        <div className="leading-tight">
+          <h1 className="text-[15px] font-bold text-secondary">
+            UniversityConnect
+          </h1>
+          <p className="text-[11px] text-gray-500">
+            Admissions & Career Counselling
+          </p>
+        </div>
+      </a>
+
+      {/* Navigation */}
+      <nav className="hidden items-center gap-5 md:flex">
+        <a href="#universities" className="text-sm font-medium text-gray-700 hover:text-primary">
+          Universities
+        </a>
+
+        <a href="#courses" className="text-sm font-medium text-gray-700 hover:text-primary">
+          Courses
+        </a>
+
+        <a href="#process" className="text-sm font-medium text-gray-700 hover:text-primary">
+          Process
+        </a>
+
+        <a href="#faq" className="text-sm font-medium text-gray-700 hover:text-primary">
+          FAQ
+        </a>
+
+        <a href="#contact" className="text-sm font-medium text-gray-700 hover:text-primary">
+          Contact
+        </a>
+      </nav>
+
+      {/* CTA Button */}
       <button
-        className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
         onClick={(e) => {
           e.stopPropagation();
-          // Add search functionality here later (open search modal, etc.)
+          openPopup();
         }}
-        title="Search"
+        className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-gray-600"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
-          />
-        </svg>
+        Apply Now
       </button>
-
-      {/* Apply Now Button */}
-      <button
-        onClick={(e) => { e.stopPropagation(); openPopup(); }}
-        className="bg-primary text-white px-5 py-2.5 rounded-md font-semibold text-sm hover:bg-primary-dark transition-colors"
-      >
-        Apply Now →
-      </button>
-    </div>
-  </header>
-);
+    </header>
+  );
+};
 
 export default Header;

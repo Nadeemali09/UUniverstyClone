@@ -1,55 +1,52 @@
 const features = [
   {
-    icon: '🏆',
-    title: 'NAAC A+ Accredited',
-    desc: 'First university in Uttarakhand to receive NAAC A+ grade in the very first assessment cycle.',
+    title: 'Counselling Before Shortlisting',
+    desc: 'We start with your marks, interests, budget, preferred location, and career goals before suggesting options.',
   },
   {
-    icon: '🌍',
-    title: 'Global Recognition',
-    desc: 'Featured in QS World University Rankings — Asia 2026 & QS Sustainability Rankings 2025.',
+    title: 'Compare Multiple Universities',
+    desc: 'See how institutions differ across courses, eligibility, fees, campus location, and application timelines.',
   },
   {
-    icon: '🏭',
-    title: '200+ Recruiters',
-    desc: 'Top MNCs like Amazon, Google, Deloitte, Cognizant, Asian Paints visit campus every year.',
+    title: 'Career-Focused Guidance',
+    desc: 'Understand the career path behind the course, not only the admission form.',
   },
   {
-    icon: '📚',
-    title: 'NEP 2020 Aligned',
-    desc: 'Multidisciplinary curriculum designed for the future, offering flexibility and industry relevance.',
+    title: 'Scholarship Direction',
+    desc: 'Get help identifying merit, domicile, category, early-application, and institution-level scholarship routes.',
   },
   {
-    icon: '💰',
-    title: 'Generous Scholarships',
-    desc: 'Up to 30% scholarship for meritorious students. Special scholarships for girls & Uttarakhand domicile.',
+    title: 'Application Support',
+    desc: 'Plan documents, deadlines, counselling calls, and the next steps needed to apply with confidence.',
   },
   {
-    icon: '🌿',
-    title: 'Beautiful Campus',
-    desc: 'Sprawling green campus in the scenic Doon Valley with world-class labs, library & sports facilities.',
+    title: 'Clear Compliance',
+    desc: 'We are transparent that UniversityConnect is an independent guidance service, not an official university website.',
   },
 ];
 
 const WhyChoose = () => (
-  <section className="bg-secondary text-white py-16 px-5">
-    <div className="max-w-6xl mx-auto">
-      <div className="text-xs font-bold uppercase tracking-[1.5px] text-accent mb-3">Why Choose UU?</div>
-      <h2 className="font-playfair font-bold text-3xl sm:text-4xl mb-3">
-        Your Success is Our Mission
+  <section className="bg-secondary px-5 py-16 text-white" id="about">
+    <div className="mx-auto max-w-6xl">
+      <div className="mb-3 text-xs font-bold uppercase tracking-[1.5px] text-accent">Why UniversityConnect?</div>
+      <h2 className="mb-3 font-playfair text-3xl font-bold sm:text-4xl">
+        Guidance Built Around the Student
       </h2>
-      <p className="text-white/70 text-sm max-w-lg leading-relaxed mb-10">
-        More than a university — a launchpad for your career with world-class infrastructure and industry connections.
+      <p className="mb-10 max-w-xl text-sm leading-relaxed text-white/70">
+        Admission decisions are expensive and emotional. We keep the process structured, practical, and easy to compare.
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {features.map((f, i) => (
+
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {features.map((feature, index) => (
           <div
-            key={i}
-            className="bg-white/10 border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors"
+            key={feature.title}
+            className="rounded-xl border border-white/20 bg-white/10 p-6 transition-colors hover:bg-white/20"
           >
-            <div className="text-4xl mb-3">{f.icon}</div>
-            <h4 className="text-base font-bold mb-2">{f.title}</h4>
-            <p className="text-sm text-white/65 leading-relaxed">{f.desc}</p>
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white text-sm font-extrabold text-secondary">
+              {String(index + 1).padStart(2, '0')}
+            </div>
+            <h4 className="mb-2 text-base font-bold">{feature.title}</h4>
+            <p className="text-sm leading-relaxed text-white/65">{feature.desc}</p>
           </div>
         ))}
       </div>

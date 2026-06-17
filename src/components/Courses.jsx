@@ -1,74 +1,88 @@
-const courses = [
+const courseTags = [
+  'Agriculture',
+  'Arts & Humanities',
+  'Aviation',
+  'Commerce',
+  'Design',
+  'Education',
+  'Engineering',
+  'Hotel Management',
+  'Information Technology',
+  'Law',
+  'Management',
+  'Media',
+  'Medical',
+  'Nursing',
+  'Pharmacy',
+  'Science',
+];
+
+const courseCards = [
   {
-    badge: 'Most Popular',
-    icon: '💻',
-    title: 'B.Tech (CSE / AI / Cyber Security)',
-    desc: '4-year program with JEE / CUET admission. Specializations in AI&ML, Cloud Computing, Aerospace & more.',
-    fee: '₹2.26 L/year onwards',
+    badge: 'Engineering',
+    title: 'BTech Admission 2026',
+    desc: 'Eligibility, branch selection, fee comparison, entrance route, and application planning.',
   },
   {
-    badge: 'Top MBA',
-    icon: '📊',
-    title: 'MBA (All Specializations)',
-    desc: '2-year full-time PG program with CAT/MAT/XAT/CMAT. Industry visits, case studies & live projects.',
-    fee: '₹2.72 L/year',
+    badge: 'Management',
+    title: 'MBA Admission 2026',
+    desc: 'Compare specializations, placement focus, budget, location, and selection process.',
   },
   {
-    icon: '⚖️',
-    title: 'BA LLB / BBA LLB (Hons)',
-    desc: '5-year integrated law program. BCI approved with strong moot court & litigation training.',
-    fee: '₹1.5 L/year onwards',
+    badge: 'Healthcare',
+    title: 'BSc Nursing Admission',
+    desc: 'Understand qualification rules, clinical exposure, documents, and state-wise timelines.',
   },
   {
-    badge: 'NIRF #75',
-    icon: '💊',
-    title: 'B.Pharma / M.Pharma',
-    desc: 'PCI approved pharmacy programs. Ranked #75 nationally by NIRF 2025 in Pharmacy category.',
-    fee: '₹1.77 L/year',
-  },
-  {
-    icon: '🏥',
-    title: 'B.Sc Nursing',
-    desc: '4-year nursing program with clinical training at affiliated hospitals. Strong placement record.',
-    fee: '₹2.55 L/year',
-  },
-  {
-    icon: '🖥️',
-    title: 'BCA / MCA',
-    desc: '3-year BCA & 2-year MCA programs in Computer Applications with industry-relevant curriculum.',
-    fee: '₹1.33 L/year onwards',
+    badge: 'Law',
+    title: 'BA LLB and LLB Guidance',
+    desc: 'Shortlist integrated and postgraduate law options with eligibility and fee clarity.',
   },
 ];
 
 const Courses = ({ openPopup }) => (
-  <section id="courses" className="py-16 px-5">
-    <div className="max-w-6xl mx-auto">
-      <div className="text-xs font-bold uppercase tracking-[1.5px] text-primary mb-3">Our Programs</div>
-      <h2 className="font-playfair font-bold text-3xl sm:text-4xl text-secondary mb-3">
-        Find Your Perfect Course
-      </h2>
-      <p className="text-gray text-sm max-w-lg leading-relaxed mb-10">
-        Choose from 153+ UG, PG & Doctoral programs across Engineering, Management, Law, Pharmacy, Nursing and more.
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {courses.map((c, i) => (
-          <div
-            key={i}
-            onClick={(e) => { e.stopPropagation(); openPopup(); }}
-            className="relative border border-gray-200 rounded-xl p-6 cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-xl"
+  <section id="courses" className="bg-slate-50 px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+    <div className="mx-auto max-w-7xl">
+      <div className="mb-8">
+        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-primary">List of top courses</p>
+        <h2 className="mt-3 font-playfair text-3xl font-extrabold text-secondary sm:text-4xl">
+          Browse course paths before you apply
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
+          Pick a stream, compare the real admission requirements, and get help planning your next move.
+        </p>
+      </div>
+
+      <div className="mb-8 flex flex-wrap gap-2">
+        {courseTags.map((tag) => (
+          <button
+            type="button"
+            key={tag}
+            onClick={openPopup}
+            className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 shadow-sm transition hover:border-primary hover:text-primary"
           >
-            {/* Top colored bar */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-primary rounded-t-xl" />
-            {c.badge && (
-              <span className="inline-block text-[10px] bg-yellow-50 text-yellow-800 px-2 py-0.5 rounded-full font-semibold mb-3">
-                {c.badge}
-              </span>
-            )}
-            <div className="text-3xl mb-3">{c.icon}</div>
-            <h3 className="text-base font-bold text-secondary mb-1.5">{c.title}</h3>
-            <p className="text-xs text-gray leading-relaxed mb-4">{c.desc}</p>
-            <div className="text-sm font-semibold text-primary">{c.fee}</div>
-          </div>
+            {tag}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-4">
+        {courseCards.map((course) => (
+          <article key={course.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <span className="rounded-full bg-primary/10 px-3 py-1 text-[11px] font-extrabold uppercase text-primary">
+              {course.badge}
+            </span>
+            <h3 className="mt-4 text-lg font-extrabold leading-snug text-secondary">{course.title}</h3>
+            <p className="mt-3 min-h-24 text-sm leading-7 text-slate-600">{course.desc}</p>
+            <button
+              type="button"
+              onClick={openPopup}
+              className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-primary"
+            >
+              View course
+              <span aria-hidden="true">-&gt;</span>
+            </button>
+          </article>
         ))}
       </div>
     </div>
