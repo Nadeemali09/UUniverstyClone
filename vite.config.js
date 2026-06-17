@@ -16,12 +16,20 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    minify: 'terser',
+    minify: 'esbuild', // Changed from 'terser' to avoid installation
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'helmet': ['react-helmet-async'],
+        manualChunks(id) {
+          // Split React and ReactDOM into a separate chunk
+          if (id.includes('node_modules') && (id.includes('react') || id.includes('react-dom'))) {
+            return 'react-vendor';
+          }
+          // Split react-helmet-async into its own chunk
+          if (id.includes('node_modules') && id.includes('react-helmet-async')) {
+            return 'helmet';
+          }
+          // Let Vite handle everything else automatically
+          return null;
         },
       },
     },
